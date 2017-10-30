@@ -1,0 +1,77 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+import java.util.*;
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> s1=new Stack<Integer>();
+        Stack<Integer> s2=new Stack<Integer>();
+        Stack<Integer> o=new Stack<Integer>();
+        pushN(l1,s1);
+        pushN(l2,s2);
+        ListNode out;
+        ListNode last;
+        ListNode oldlast;
+        boolean carry=false;
+        while ((!s1.empty())&&(!s2.empty())){
+            int temp=s1.pop()+s2.pop();
+            if(carry){
+                temp++;
+                carry=false;
+            }
+            if(temp>=10){
+                temp-=10;
+                carry=true;
+            }
+            o.push(temp);
+        }
+        if(s1.empty())
+            while(!s2.empty()){
+            if(carry){
+                int tt=s2.pop()+1;
+                o.push(tt%10);
+                carry=false;
+                if((tt/10)>0)
+                    carry=true;
+            }
+            else
+                o.push(s2.pop());
+        }
+        if(s2.empty()){
+            while(!s1.empty()){
+                if(carry){
+                int qq=s1.pop()+1;
+                o.push(qq%10);
+                carry=false;
+                if((qq/10)>0)
+                    carry=true;
+            }
+                else
+                    o.push(s1.pop());
+            }}
+        if(s1.empty()&&s2.empty()&&carry)
+            o.push(1);
+        out=new ListNode(o.pop());
+        oldlast=out;
+        while(!o.empty()){
+            last=new ListNode(o.pop());
+            oldlast.next=last;
+            oldlast=last;
+        }
+        return out;
+
+
+
+
+    }
+    void pushN(ListNode l,Stack s){
+        for(;l!=null;l=l.next)
+            s.push(l.val);
+
+    }
+}
