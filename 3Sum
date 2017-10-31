@@ -15,11 +15,8 @@ class Solution {
                  continue;
              int index=Arrays.binarySearch(nums,j+1,N,-nums[i]-nums[j]);
              if(index>j){
-                 List<Integer> l=new LinkedList<>();
-                 l.add(nums[i]);
-                 l.add(nums[j]);
-                 l.add(nums[index]);
-                 out.add(l);
+                 
+                 out.add(Arrays.asList(nums[i], nums[j], nums[index]));
              }
          }
         }
