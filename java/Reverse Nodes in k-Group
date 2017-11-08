@@ -1,0 +1,38 @@
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head==null)
+            return null;
+        ListNode last=findL(head,k);
+        if(last==null)
+            return head;
+        ListNode nextG=last.next;
+        last.next=null;
+        head=reverse(head);
+        last=findL(head,k);
+        last.next=reverseKGroup(nextG,k);
+        return head;
+    }
+    ListNode findL(ListNode h,int k){
+        while(h!=null&&k!=1){
+            h=h.next;
+            k--;
+        }
+        if(h==null)
+            return null;
+        return h;
+    }
+    ListNode reverse(ListNode h){
+        if(h==null)
+            return null;
+        ListNode pre = h;
+        ListNode cur = h.next;
+        while (cur != null)
+        {
+            pre.next = cur.next;
+            cur.next = h;
+            h = cur;
+            cur = pre.next;
+        }
+        return h;
+    }
+}
