@@ -1,0 +1,29 @@
+class Solution {
+    int [][] mina;
+    public int minPathSum(int[][] grid) {
+
+        if(grid==null) return 0;
+        int M=grid.length;
+        int N=grid[0].length;
+        mina=new int [M][N];
+        return mini(0,0,grid,M-1,N-1);
+    }
+    int mini(int i,int j,int[][] arr,int m,int n){
+        if(mina[i][j]!=0)
+            return mina[i][j];
+        if(i==m&&j==n)
+            return arr[i][j];
+        else if(i==m)
+            return mini(i,j+1,arr,m,n)+arr[i][j];
+        else if(j==n)
+            return mini(i+1,j,arr,m,n)+arr[i][j];
+        else{
+            mina[i][j]=min(mini(i+1,j,arr,m,n),mini(i,j+1,arr,m,n))+arr[i][j];
+            return mina[i][j];}
+    }
+    int min (int a,int b){
+        if(a<=b)
+            return a;
+        else return b;
+    }
+}
