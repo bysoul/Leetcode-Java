@@ -1,0 +1,40 @@
+class Solution {
+    public boolean isValid(String s) {
+        boolean res=true;
+        Stack <Character> a=new Stack<>();
+            
+        for(int i=0;i<s.length();i++){
+            switch (s.charAt(i)){
+                case '(':
+                    a.push('(');
+                    break;
+                case'{':
+                    a.push('{');
+                    break;
+                case'[':
+                    a.push('[');
+                    break;
+                case')':
+                    if(a.empty()||a.pop()!='(')
+                        res=false;
+                    break;
+                    case'}':
+                    if(a.empty()||a.pop()!='{')
+                        res=false;
+                    break;
+                    case']':
+                    if(a.empty()||a.pop()!='[')
+                        res=false;
+                    break;
+                    
+                    
+            }
+            if(res==false)
+                break;
+     }
+        if(!a.empty())
+            res=false;
+        return res;
+    }
+        
+}
