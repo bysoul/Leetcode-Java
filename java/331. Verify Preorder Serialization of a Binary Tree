@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        Stack<String> s=new Stack<String>();
+        int count=0;
+        String[] temp=preorder.split(",");
+        if((temp.length-1)%2==1)
+            return false;
+        for(String i:temp)
+            s.push(i);
+        while(!s.empty()){
+            if(s.peek().equals("#")){
+                count++;
+                s.pop();
+            }
+            else{
+                if(count==1)
+                    return false;
+                s.pop();
+                s.push("#");
+                count-=2;
+                
+            }
+        }
+        if(count!=1)
+            return false;
+        else
+            return true;
+        
+    }
+}
