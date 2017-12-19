@@ -1,0 +1,25 @@
+class Solution {
+    int[] r;
+    public int minCostClimbingStairs(int[] cost) {
+        r=new int[cost.length];
+        for(int i=0;i<cost.length;i++){
+            r[i]=-1;
+        }
+        return rec(cost,cost.length);
+    }
+    int rec(int[] cost,int n){
+        if(n<0)
+            return 0;
+        if(n==cost.length)
+            return rec(cost,n-1)<rec(cost,n-2)?rec(cost,n-1):rec(cost,n-2);
+        if(r[n]>=0)
+            return r[n];
+        if(rec(cost,n-1)<rec(cost,n-2)){
+            r[n]=cost[n]+rec(cost,n-1);
+            return r[n];}
+        else{
+            r[n]=cost[n]+rec(cost,n-2);
+            return r[n];}
+        
+    }
+}
