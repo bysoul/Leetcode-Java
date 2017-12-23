@@ -1,0 +1,13 @@
+class Solution {
+    public int[] countBits(int num) {
+        int t=1;
+        int[] res=new int[num+1];
+        res[0]=0;
+        for(int i=1;i<=num;i++){
+            if(i==t*2)
+                t=t*2;
+            res[i]=1+res[i-t];
+        }
+        return res;
+    }
+}
