@@ -1,0 +1,18 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxCur=0;
+        int maxSofar=0;
+        int max=nums[0];
+        for(int i=0;i<nums.length;i++){
+            maxCur=Math.max(0,maxCur+nums[i]);
+            maxSofar=Math.max(maxCur,maxSofar);
+        }
+        if(maxSofar==0){
+            for(int j=1;j<nums.length;j++){
+                if(nums[j]>max)
+                    max=nums[j];
+            }
+            return max;}
+        return maxSofar;
+    }
+}
