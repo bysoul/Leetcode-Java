@@ -6,10 +6,12 @@ class Solution {
         if(n==null)
             return null;
         else{
-            TreeNode i=new TreeNode(n.val);
-            i.left=rec(n.right);
-            i.right=rec(n.left);
-            return i;
+            TreeNode i=n.left;
+            n.left=n.right;
+            n.right=i;
+            n.left=rec(n.left);
+            n.right=rec(n.right);
+            return n;
         }
     }
 }
