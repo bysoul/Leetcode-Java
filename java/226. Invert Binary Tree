@@ -1,0 +1,15 @@
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        return rec(root);
+    }
+    TreeNode rec(TreeNode n){
+        if(n==null)
+            return null;
+        else{
+            TreeNode i=new TreeNode(n.val);
+            i.left=rec(n.right);
+            i.right=rec(n.left);
+            return i;
+        }
+    }
+}
