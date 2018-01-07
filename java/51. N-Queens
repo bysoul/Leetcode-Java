@@ -1,0 +1,41 @@
+class Solution {
+    List<List<String>> res=new ArrayList<List<String>>();
+    public List<List<String>> solveNQueens(int n) {
+        backtrack(new int[n],0,n);
+        return res;
+    }
+    void backtrack(int[] a,int row,int n){
+        if(row==n){
+            List<String> t=new ArrayList<String>();
+            for(int i:a){
+                String s="";
+                for(int j=0;j<n;j++){
+                    if(j==i)
+                    s+="Q";
+                    else
+                        s+=".";
+                }
+                t.add(s);
+            }
+            res.add(t);
+            return;
+        }
+        else{
+            for(int j=0;j<n;j++){
+                if(check(a,row,j)){
+                    a[row]=j;
+                    backtrack(a,row+1,n);
+                }
+            }
+        }
+        return;
+    }
+    boolean check(int[]a,int r,int j){
+        boolean b=true;
+        for(int i=0;i<r;i++){
+            if(!(a[i]!=j&&Math.abs(i-r)!=Math.abs(a[i]-j)))
+                b=false;
+        }
+        return b;
+     }
+}
