@@ -1,0 +1,22 @@
+class Solution {
+    List<String> res=new ArrayList<String>();
+    String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
+        rec("",digits,0);
+        return res;
+    }
+    void rec(String s,String digits,int n){
+        if(digits.length()==0)
+            return;
+        if(digits.length()==n){
+            res.add(s);
+        }
+        else{
+        int i=digits.charAt(n)-'0';
+        for(int j=0;j<mapping[i].length();j++){
+            rec(s+mapping[i].charAt(j),digits,n+1);
+        }
+        }
+        return;
+    }
+}
