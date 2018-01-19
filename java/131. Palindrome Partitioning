@@ -1,0 +1,29 @@
+class Solution {
+    List<List<String>> res;
+    ArrayList<String> cur;
+    public List<List<String>> partition(String s) {
+        res = new ArrayList<List<String>>();
+	    cur = new ArrayList<String>();
+        backtrack(0,s);
+        return res;
+    }
+    void backtrack(int i,String s){
+        if(i==s.length())
+            res.add(new ArrayList<>(cur));
+        for(int j=i;j<s.length();j++){
+            if(check(s,i,j)){
+                cur.add(s.substring(i,j+1));
+                backtrack(j+1,s);
+                cur.remove(cur.size()-1);
+            }
+        }
+    }
+    private boolean check(String s, int i, int j){
+	        if(i==j) return true;
+	        while(i<j){
+	            if(s.charAt(i)!=s.charAt(j)) return false;
+	            i++;j--;
+	        }
+	        return true;
+	    }
+}
