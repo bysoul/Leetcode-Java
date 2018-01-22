@@ -1,0 +1,14 @@
+class Solution {
+    int sum=0;
+    public TreeNode convertBST(TreeNode root) {
+        rec(root);
+        return root;
+    }
+    void rec(TreeNode n){
+        if(n==null)return;
+        rec(n.right);
+        n.val+=sum;
+        sum=n.val;
+        rec(n.left);
+    }
+}
