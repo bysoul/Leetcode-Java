@@ -1,0 +1,16 @@
+class Solution {
+    public boolean isHappy(int n) {
+        return rec(2,n);
+    }
+    boolean rec(int n,int cur){
+        int sum=0;
+        while(cur!=0){
+            sum+=(cur%10)*(cur%10);
+            cur/=10;
+        }
+        while(sum%10==0) sum/=10;
+        if(sum==1) return true;
+        else if(n==sum) return false;
+        else return rec(n,sum);
+    }
+}
