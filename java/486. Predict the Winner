@@ -1,0 +1,24 @@
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        int n=nums.length;
+        Dp[][] dp=new Dp[n][n];
+        double sum=0;
+        for(int i=0;i<n;i++){
+            dp[i][i]=new Dp();
+            dp[i][i].value=dp[i][i].sum=nums[i];
+            sum+=nums[i];
+        }
+        for(int k=1;k<n;k++){
+            for(int i=0;i<n-k;i++){
+                dp[i][i+k]=new Dp();
+                dp[i][i+k].sum=dp[i+1][i+k].sum+dp[i][i].sum;
+                dp[i][i+k].value=dp[i][i+k].sum-Math.min(dp[i][i+k-1].value,dp[i+1][i+k].value);
+            }
+        }
+        return dp[0][n-1].value>=sum/2?true:false;
+    }
+}
+class Dp{
+    int sum;
+    int value;
+}
