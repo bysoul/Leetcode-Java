@@ -1,0 +1,21 @@
+class Solution {
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        int n=Math.max(query_row,query_glass);
+        double [][] m=new double [n+1][n+1];
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<n+1;j++)
+                m[i][j]=-1;
+        }
+        m[0][0]=poured;
+        return Math.min(rec(m,poured,query_row,query_glass),1);
+    }
+    double rec(double [][] m,int poured, int row, int glass)
+    {
+        if(glass<0||row<0||glass>row) return 0;
+        if(m[row][glass]!=-1) return m[row][glass];
+        double right=Math.max((rec(m,poured,row-1,glass)-1)/2,0);
+        double left=Math.max((rec(m,poured,row-1,glass-1)-1)/2,0);
+        m[row][glass]=left+right;
+        return left+right;
+    }
+}
