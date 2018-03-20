@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int n=s.length();
+        int[][] pa=new int[26][n+1];
+        pa[s.charAt(0)-'a'][0]=1;
+        int X=0;
+        for(int j=0;j<n;j++){
+            for(int i=0;i<26;i++)
+                pa[i][j]=pa[i][X];
+            pa[s.charAt(j)-'a'][j]=j+1;
+            X=pa[s.charAt(j)-'a'][X];
+        }
+        int state=0;
+        for(int m=0;m<t.length();m++){
+            state=pa[t.charAt(m)-'a'][state];
+            if(state==n) return true;
+        }
+        return false;
+    }
+}
