@@ -1,7 +1,7 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
         int n=s.length();
-        int[][] pa=new int[26][n+1];
+        int[][] pa=new int[26][n];
         pa[s.charAt(0)-'a'][0]=1;
         int X=0;
         for(int j=1;j<n;j++){
