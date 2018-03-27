@@ -1,0 +1,81 @@
+class Solution {
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int[] res=new int[k];
+        for(int i=0;i<k+1;i++){
+            int j=k-i;
+            if(i>nums1.length||j>nums2.length) continue;
+            int[] left=findMax(i,nums1);
+            int[] right=findMax(j,nums2);
+            int[] temp=merge(left,right,i,j,k);
+            for(int p=0;p<k;p++){
+                if(res[p]>temp[p]) break;
+                else if(res[p]<temp[p]){
+                    res=temp;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+    int[] findMax(int k,int[] num){
+        if(num.length<=k) return num;
+        int[] ret=new int[k];
+        int start=0;
+        int kk=k;
+        for(int i=0;i<k;i++){
+            int max=0;
+            for(int j=start;j<num.length-kk+1;j++){
+                if(max<num[j]){
+                    max=num[j];
+                    start=j;
+                }
+            }
+            if(start==num.length-kk){
+                for(int x=i;x<k;x++){
+                    ret[x]=num[start];
+                    start++;
+                }
+                break;
+            }
+            start++;
+            kk--;
+            ret[i]=max;
+        }
+        return ret;
+    }
+    int[] merge(int[] a,int[] b,int x,int y,int k){
+        int[] ret=new int[k];
+        int i=0,j=0,index=0;
+        while((i<x||j<y)&&index<k){
+            if(i>=x) ret[index++]=b[j++];
+            else if(j>=y) ret[index++]=a[i++];
+            else if(a[i]>b[j]) ret[index++]=a[i++];
+            else if(a[i]<b[j]) ret[index++]=b[j++];
+            else{
+                int p=i+1;
+                int q=j+1;
+                while(p<x&&q<y){
+                    if(a[p]>b[q]) {
+                        ret[index++]=a[i++];
+                        break;
+                    }
+                    else if(a[p]<b[q]) {
+                        ret[index++]=b[j++];
+                        break;
+                    }
+                    else{
+                        p++;
+                        q++;
+                    }
+                }
+                if(p==x||q==y){
+                if(p==x&&q<y) ret[index++]=b[j++];
+                else if(q==y&&p<x){
+                    ret[index++]=a[i++];}
+                else ret[index++]=b[j++];}
+            }
+        }
+        return ret;
+    }
+}
+//非常僵硬
