@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res=new ArrayList<>();
+        if(root==null) return res;
+        List<TreeNode> ol=new LinkedList<>();
+        ol.add(root);
+        helper(res,ol);
+        return res;
+        
+    }
+    void helper(List<List<Integer>> res,List<TreeNode> ol){
+        List<TreeNode> nl=new LinkedList<>();
+        List<Integer> cur=new LinkedList<>();
+        for(TreeNode t:ol){
+            if(t!=null){
+                nl.add(t.left);
+                nl.add(t.right);
+                cur.add(t.val);
+            }
+        }
+        if(nl.size()==0) return;
+        res.add(cur);
+        helper(res,nl);
+    }
+}
