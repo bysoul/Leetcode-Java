@@ -1,0 +1,23 @@
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null||head.next==null) return null;
+        ListNode slow=head.next,fast=head.next.next;
+        while(fast!=null&&fast.next!=null&&fast.next.next!=null&&slow!=fast){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        if(fast==null||fast.next==null||fast.next.next==null) return null;
+        ListNode temp=head;
+        while(temp!=fast){
+            temp=temp.next;
+            fast=fast.next;
+        }
+        return temp;
+    }
+}
+
+Something interesting happened.
+At first,i realized the check for "fast.next.next!=null" is useless.
+Then,i removed the condition.
+But,i found that if i didn't check"fast.next.next!=null",program ran slower.
+The cost for just one time "fast=fast.next.next" might be larger than every time condition check.
