@@ -1,0 +1,67 @@
+//288 ms solution
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n=nums.length;
+        boolean[] dp=new boolean[n];
+        dp[0]=true;
+        for(int i=1;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(dp[j]==true&&j+nums[j]>=i){
+                    dp[i]=true;
+                    break;
+                }
+            }
+        }
+        return dp[n-1];
+    }
+}
+
+//396 ms solution
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n=nums.length;
+        boolean[] dp=new boolean[n];
+        dp[0]=true;
+        for(int i=0;i<n;i++){
+            if(dp[i]==true){
+                for(int j=1;i+j<n&&j<=nums[i];j++){
+                    dp[i+j]=true;
+                }
+            }
+        }
+        return dp[n-1];
+    }
+}
+
+//9 ms solution
+class Solution {
+    public boolean canJump(int[] nums) {
+        int n=nums.length;
+        boolean[] dp=new boolean[n];
+        dp[0]=true;
+        for(int i=0;i<n;i++){
+            if(dp[i]==true){
+                for(int j=nums[i];j>=1;j--){
+                    if(i+j>=n-1) return true;
+                    if(dp[i+j]==true) break;
+                    dp[i+j]=true;
+                }
+            }
+        }
+        return dp[n-1];
+    }
+}
+
+//7 ms solution in discuss
+class Solution {
+  public boolean canJump(int[] nums) {
+    int leftMostGoodPosition = nums.length - 1;
+    for (int i = nums.length - 1; i >= 0; i--) {
+      if (i + nums[i] >= leftMostGoodPosition) {
+        leftMostGoodPosition = i;
+      }
+    }
+    
+    return leftMostGoodPosition == 0;
+  }
+}
