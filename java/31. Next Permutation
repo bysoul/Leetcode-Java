@@ -33,3 +33,8 @@ class Solution {
         return;
     }
 }
+//Bisic idea：
+//1.from n-1 to 0 find first element whose value is bigger than it's previous and index i (从后向前找到第一个大于之前元素的索引i)
+//2.from n-1 to i find first element whose value is bigger than i-1 and index j (在n-1到i找到第一个大于nums[i-1]的索引j)
+//3.swap i-1 and j
+//4.reverse nums from i to n-1
