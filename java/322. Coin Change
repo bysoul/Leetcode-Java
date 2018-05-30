@@ -1,0 +1,28 @@
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int min=0;
+        Arrays.sort(coins);
+        int[] dp=new int[amount+1];
+        for(int i=1;i<=amount;i++){
+            int j=0;
+            int cur=Integer.MAX_VALUE;
+            while(j<coins.length&&coins[j]<=i){
+                if(i==coins[j]){
+                    cur=1;
+                    break;
+                }
+                int temp=dp[i-coins[j]];
+                if(temp>0){
+                    cur=cur>temp?temp+1:cur;
+                }
+                j++;
+            }
+            if(cur==Integer.MAX_VALUE){
+                dp[i]=-1;
+            }
+            else
+                dp[i]=cur;
+        }
+        return dp[amount];
+    }
+}
