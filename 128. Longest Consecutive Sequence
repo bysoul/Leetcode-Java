@@ -1,0 +1,28 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> hs=new HashSet<>();
+        for(int i:nums){
+            hs.add(i);
+        }
+        int res=0;
+        for(int i:nums){
+            if(hs.contains(i)){
+                int temp=1;
+                int j=i;
+                hs.remove(i);
+                while (hs.contains(i+1)){
+                    hs.remove(i+1);
+                    temp++;
+                    i++;
+                }
+                while (hs.contains(j-1)){
+                    temp++;
+                    hs.remove(j-1);
+                    j--;
+                }
+                res=res>temp?res:temp;
+            }
+        }
+        return res;
+    }
+}
