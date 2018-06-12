@@ -1,0 +1,67 @@
+//BFS solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root==null)
+            return "";
+        LinkedList<TreeNode> que=new LinkedList<TreeNode>();
+        StringBuilder sb=new StringBuilder();
+        que.add(root);
+        while(!que.isEmpty()){
+            TreeNode temp=que.removeFirst();
+            if(temp==null){
+                sb.append("null,");
+            }
+            else{
+                sb.append(temp.val);
+                sb.append(",");
+                que.add(temp.left);
+                que.add(temp.right);
+            }
+        }
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.length()==0)
+            return null;
+        String sp[]=data.split(",");
+        TreeNode root=new TreeNode(Integer.parseInt(sp[0]));
+        LinkedList<TreeNode> que=new LinkedList<TreeNode>();
+        que.add(root);
+        for(int i=1;i<sp.length;i++){
+            TreeNode temp=que.removeFirst();
+            TreeNode left=parseT(sp[i]);
+            TreeNode right=parseT(sp[++i]);
+            temp.left=left;
+            temp.right=right;
+            if(left!=null) que.add(left);
+            if(right!=null) que.add(right);
+        }
+        return root;
+
+    }
+    private TreeNode parseT(String s){
+        if(s.equals("null")){
+            return null;
+        }
+        else{
+            return new TreeNode(Integer.parseInt(s));
+        }
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
