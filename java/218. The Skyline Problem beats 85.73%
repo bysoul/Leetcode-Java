@@ -1,0 +1,59 @@
+class Solution {
+    public List<int[]> getSkyline(int[][] buildings) {
+        ArrayList<int[]> res = new ArrayList<>();
+        int n = buildings.length;
+        if (n == 0) return res;
+        helper(-1, 0, 0,Integer.MAX_VALUE , buildings,  res,true,0);
+        return res;
+    }
+
+    void helper(int curI, int curMax, int left, int right, int[][] buildings, ArrayList<int[]> res,boolean f,int oldMax) {
+        if(f){
+            int oldI = curI;
+            boolean flag = true;
+            int leftIndex=0;
+            for (int i = 0; i < buildings.length; i++) {
+                if (i != oldI && buildings[i][2] > curMax && left <= buildings[i][0] && right >= buildings[i][0]) {
+                    if (flag) {
+                        leftIndex = buildings[i][0];
+                        flag = false;
+                    } else {
+                        if (buildings[i][0] != leftIndex)
+                            break;
+                    }
+                    curI = i;
+                    curMax = buildings[i][2];
+                }
+            }
+            if (curI != oldI) {
+                res.add(new int[]{buildings[curI][0], curMax});
+                helper(curI, curMax, buildings[curI][0], buildings[curI][1], buildings, res,true,curMax);
+            } else {
+                if(curI!=-1)
+                    helper(-1, 0, buildings[curI][1], Integer.MAX_VALUE, buildings,  res,false,curMax);
+            }
+            return;
+        }
+        else{
+            int oldI = curI;
+            boolean flag = true;
+            for (int i = 0; i < buildings.length; i++) {
+                if (i != oldI && buildings[i][2] > curMax && left >= buildings[i][0]&&buildings[i][1]>left) {
+                    curI = i;
+                    curMax = buildings[i][2];
+                }
+            }
+            if (curI != oldI) {
+                if(oldMax!=curMax)
+                    res.add(new int[]{left, curMax});
+                helper(curI, curMax, left+1, buildings[curI][1], buildings,  res,true,curMax);
+            }
+            else {
+                res.add(new int[]{left, 0});
+                helper(-1, 0, left, Integer.MAX_VALUE, buildings, res,true,curMax);
+
+            }
+        }
+        return;
+    }
+}
