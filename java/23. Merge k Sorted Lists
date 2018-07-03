@@ -1,0 +1,39 @@
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        ArrayList<Integer> temp=new ArrayList<>();
+        int n=lists.length;
+        if(n==0){
+            return null;
+        }
+        ListNode head=new ListNode(0);
+        ListNode res=head;
+        int flag=n;
+        int min=Integer.MAX_VALUE;
+        while (flag>0) {
+            flag=n;
+            min=Integer.MAX_VALUE;
+            temp.clear();
+            for (int i = 0; i < n; i++) {
+                if(lists[i]!=null) {
+                    if (lists[i].val < min) {
+                        min=lists[i].val;
+                        temp.clear();
+                        temp.add(i);
+                    } else if (lists[i].val == min) {
+                        temp.add(i);
+                    }
+                }
+                else{
+                    flag--;
+                }
+            }
+            int size=temp.size();
+            for(int j=size-1;j>=0;j--) {
+                head.next=new ListNode(lists[temp.get(j)].val);
+                head=head.next;
+                lists[temp.get(j)]=lists[temp.get(j)].next;
+            }
+        }
+        return res.next;
+    }
+}
