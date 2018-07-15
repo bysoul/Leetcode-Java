@@ -1,0 +1,36 @@
+class Solution {
+    public int romanToInt(String s) {
+        char[] ar=s.toCharArray();
+        int n=ar.length;
+        int res=0;
+        if(n==0) return 0;
+        for(int i=0;i<n;i++){
+            if(ar[i]=='M') res+=1000;
+            else if(ar[i]=='D') res+=500;
+            else if(ar[i]=='L') res+=50;
+            else if(ar[i]=='V') res+=5;
+            else if(ar[i]=='C'){
+                if(i!=n-1&&(ar[i+1]=='D'||ar[i+1]=='M'))
+                    res-=100;
+                else{
+                    res+=100;
+                }
+            } 
+            else if(ar[i]=='X'){
+                if(i!=n-1&&(ar[i+1]=='L'||ar[i+1]=='C'))
+                    res-=10;
+                else{
+                    res+=10;
+                }
+            }
+            else if(ar[i]=='I'){
+                if(i!=n-1&&(ar[i+1]=='V'||ar[i+1]=='X'))
+                    res-=1;
+                else{
+                    res+=1;
+                }
+            }
+        }
+        return res;
+    }
+}
