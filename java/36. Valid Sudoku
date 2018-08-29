@@ -1,0 +1,23 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashSet<Character> row;
+        HashSet<Character> col;
+        HashSet<Character> sub;
+        for(int i=0;i<9;i++){
+            row=new HashSet<>();
+            col=new HashSet<>();
+            sub=new HashSet<>();
+            for(int j=0;j<9;j++){
+                if(board[i][j]!='.'&&!row.add(board[i][j]))
+                    return false;
+                if(board[j][i]!='.'&&!col.add(board[j][i]))
+                    return false;
+                int x=3*(i/3);
+                int y=3*(i%3);
+                if(board[x+j/3][y+j%3]!='.'&&!sub.add(board[x+j/3][y+j%3]))
+                    return false;
+            }
+        }
+        return true;
+    }
+}
