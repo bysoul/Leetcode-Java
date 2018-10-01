@@ -1,0 +1,27 @@
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if(root==null) return;
+        LinkedList<TreeLinkNode> la=new LinkedList<>();
+        LinkedList<TreeLinkNode> lb=new LinkedList<>();
+        la.add(root.left);
+        la.add(root.right);
+        TreeLinkNode levelroot=la.removeFirst();
+        while(levelroot!=null) {
+            TreeLinkNode cur = levelroot;
+            while (!la.isEmpty()) {
+                TreeLinkNode temp = la.removeFirst();
+                cur.next = temp;
+                cur = temp;
+            }
+            cur = levelroot;
+            while (cur!=null){
+                la.add(cur.left);
+                la.add(cur.right);
+                cur=cur.next;
+
+            }
+            levelroot=la.removeFirst();
+        }
+        return;
+    }
+}
