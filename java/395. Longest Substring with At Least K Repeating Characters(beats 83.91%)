@@ -1,0 +1,36 @@
+class Solution {
+    int max=0;
+    public int longestSubstring(String s, int k) {
+        char[] str = s.toCharArray();
+        helper(str,0,s.length(),k);
+        return max;
+    }
+    private void helper(char[] str, int start, int end,  int k){
+        if (end - start < k) return;
+        int[] count = new int [26];
+        for (int i = start; i<end; i++) {
+            int idx = str[i] - 'a';
+            count[idx]++;
+        }
+        HashSet<Integer> hs=new HashSet<>();
+        for(int i=0;i<26;i++){
+            if(count[i]<k&& count[i] > 0)
+                hs.add(i);
+        }
+        if(hs.size()==0){
+            int cur=end-start;
+            max=cur>max?cur:max;
+            return;
+        }
+        int nextS=0;
+        for (int j = start; j<end; j++) {
+            if(hs.contains(str[j]-'a')){
+                helper(str, nextS, j, k);
+                nextS=j+1;
+            }
+            if(j==end-1&&nextS<end)
+                helper(str, nextS, end, k);
+        }
+        return;
+    }
+}
