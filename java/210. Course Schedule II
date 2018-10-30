@@ -1,0 +1,50 @@
+class Solution {
+    private LinkedList<Integer> stack;
+    private boolean[] marked;
+    private boolean[] onStack;
+    private boolean flag;
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        LinkedList[] ar=new LinkedList[numCourses];
+        for(int i=0;i<numCourses;i++){
+            ar[i]=new LinkedList<Integer>();
+        }
+        for(int[] a:prerequisites){
+            ar[a[1]].add(a[0]);
+        }
+        marked=new boolean[numCourses];
+        onStack=new boolean[numCourses];
+        stack=new LinkedList<Integer>();
+        for(int i=0;i<numCourses;i++){
+            if(!marked[i]){
+                dfs(ar,i);
+            }
+        }
+        if(flag==true){
+            return new int[0];
+        }
+        else{
+            int[] res=new int[numCourses];
+            for(int i=0;i<numCourses;i++){
+                res[i]=stack.removeFirst();
+            }
+            return res;
+        }
+    }
+    private void dfs(LinkedList<Integer>[] ar,int i){
+        onStack[i]=true;
+        marked[i]=true;
+        for(int temp:ar[i]){
+            if(flag) return;
+            else if(onStack[temp]){
+                flag=true;
+                return;
+            }
+            else if(marked[temp]!=true){
+                dfs(ar,temp);
+            }
+        }
+        stack.addFirst(i);
+        onStack[i]=false;
+        return;
+    }
+}
