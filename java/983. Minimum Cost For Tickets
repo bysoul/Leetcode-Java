@@ -1,0 +1,25 @@
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        int length=days.length;
+        if(length==1)
+            return costs[0];
+        int[] line;
+        line=new int[days[length-1]+1];
+        int minCost=Math.min(costs[0],Math.min(costs[1],costs[2]));
+        for(int i=0;i<length;i++){
+            int curD=days[i];
+            int d1=curD-1>0?line[curD-1]+minCost:minCost;
+            int d7=curD-7>0?line[curD-7]+costs[1]:costs[1];
+            int d30=curD-30>0?line[curD-30]+costs[2]:costs[2];
+            line[curD]=Math.min(Math.min(d1,d7),d30);
+            if(i!=length-1){
+                for(int j=curD+1;j<days[i+1];j++){
+                    line[j]=line[curD];
+                }
+            }
+        }
+        //for(int i=0;i<=days[length-1];i++)
+            //System.out.println(i+" : "+line[i]);
+        return line[days[length-1]];
+    }
+}
