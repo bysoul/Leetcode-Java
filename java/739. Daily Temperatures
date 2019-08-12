@@ -1,0 +1,77 @@
+//Complicated and slow solution
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        PriorityQueue<Temp> pq=new PriorityQueue<>(
+                new Comparator<Temp>() {
+                    @Override
+                    public int compare(Temp o1, Temp o2) {
+                        if(o1.value<o2.value){
+                            return -1;
+                        }
+                        else{
+                            return 1;
+                        }
+                    }
+                }
+        );
+        int n=T.length;
+        int[] ret=new int[n];
+        pq.add(new Temp(0,T[0]));
+        for(int i=1;i<n;i++){
+            while(!pq.isEmpty()){
+                if(pq.peek().value<T[i]){
+                    Temp temp=pq.poll();
+                    ret[temp.index]=i-temp.index;
+                }
+                else{
+                    break;
+                }
+            }
+            pq.add(new Temp(i,T[i]));
+        }
+        while(!pq.isEmpty()){
+            Temp temp=pq.poll();
+            ret[temp.index]=0;
+        }
+        return ret;
+    }
+    class Temp{
+        int index;
+        int value;
+        public Temp(int index, int value) {
+            this.index = index;
+            this.value = value;
+        }
+    }
+}
+//Graceful solution
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int[] waitDays = new int[T.length];
+        
+        waitDays[T.length-1] = 0;
+        for (int day = T.length-2; day >= 0; day--) {
+            if (T[day] < T[day+1]) {
+                waitDays[day] = 1;
+            }
+            else {
+                int nextDay = waitDays[day+1];
+                
+                while (true) {
+                    if (T[day+1+ nextDay] > T[day]) {
+                        waitDays[day] = nextDay+1;
+                        break;
+                    }
+                    
+                    if (waitDays[day+1+nextDay] == 0) {
+                        waitDays[day] = 0;
+                        break;
+                    }
+                    
+                    nextDay += waitDays[day+1+ nextDay];
+                }
+            }
+        }
+        return waitDays;
+    }
+}
