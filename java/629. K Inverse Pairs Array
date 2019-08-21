@@ -1,0 +1,20 @@
+class Solution {
+    public int kInversePairs(int n, int k) {
+        int[][] dp=new int[n+1][k+1];
+        dp[0][0]=1;
+        for(int i=1;i<=n;i++){
+            int temp=0;
+            for(int j=0;j<=k;j++){
+                temp=temp+dp[i-1][j];
+                if((j-i)>=0)
+                    temp-=dp[i-1][j-i];
+                if(temp<0)
+                    temp+=1000000007;
+                else
+                    temp%=1000000007;
+                dp[i][j]=temp;
+            }
+        }
+        return dp[n][k];
+    }
+}
