@@ -1,0 +1,46 @@
+class Solution {
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int l1=s1.length();
+        int l2=s2.length();
+        int l3=s3.length();
+        char[] c1=s1.toCharArray();
+        char[] c2=s2.toCharArray();
+        char[] c3=s3.toCharArray();
+        if(l1+l2!=l3)
+            return false;
+        int[][] dp=new int[l1+1][l2+1];
+        dp[0][0]=1;
+        for(int i=1;i<=l1;i++){
+            if(dp[i-1][0]==1){
+                if(c1[i-1]==c3[i-1])
+                    dp[i][0]=1;
+            }
+            else
+                break;
+        }
+        for(int j=1;j<=l2;j++){
+            if(dp[0][j-1]==1){
+                if(c2[j-1]==c3[j-1])
+                    dp[0][j]=1;
+            }
+            else
+                break;
+        }
+        for(int i=1;i<=l1;i++){
+            for(int j=1;j<=l2;j++){
+                if(dp[i][j-1]==1){
+                    if(c2[j-1]==c3[i+j-1]){
+                        dp[i][j]=1;
+                        continue;
+                    }
+                }
+                if(dp[i-1][j]==1){
+                        if(c1[i-1]==c3[i+j-1]){
+                            dp[i][j]=1;
+                    }
+                }
+            }
+        }
+        return dp[l1][l2]==1?true:false;
+    }
+}
